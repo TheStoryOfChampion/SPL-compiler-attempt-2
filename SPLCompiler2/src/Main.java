@@ -1,8 +1,11 @@
 import Lexer.Lexer;
+import Parser.Parser;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.CoderMalfunctionError;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.*;
 
@@ -13,11 +16,23 @@ public class Main {
         String directory = "";
         int count = 1;
         try {
+//////////////////////////////////////START\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+//..................................LEXER....................................................
             Lexer lex = new Lexer();
             System.out.println("Lexing.......................");
-//            LinkedList lst = lex.start();
+            ArrayList<Lexer.token> tokenArray = new ArrayList<Lexer.token>();
+            tokenArray = lex.start();
             System.out.println("Done Lexing..................");
 
+//....................................PARSER..................................................
+            Parser pars = new Parser();
+            System.out.println("Parsing......................");
+//            TreeNode parsedTree = parser.start(true, false);
+//            String treeString = parser.printTree();
+//            writeToFile(treeString, count++);
+            System.out.println("Done Parsing.................");
+
+///////////////////////////////////////END\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
         } catch (Exception e) {
             System.out.println("Exited, Found Error");
             if (e.getMessage() == null) {
