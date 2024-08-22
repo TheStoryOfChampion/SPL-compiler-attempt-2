@@ -32,6 +32,20 @@ public class Lexer {
             this.line = line;
         }
     }
+
+    public static boolean AsciiCharBetween32to127(String s) {
+        for (char c : s.toCharArray()) {
+
+            if (c >= 32 && c <= 127) {
+                continue;
+
+            } else {
+                return false;
+            }
+
+        }
+        return true;
+    }
     public ArrayList<token> start() throws FileNotFoundException{
         Character[] letterChars = new Character[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
                 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
@@ -51,8 +65,52 @@ public class Lexer {
         int idNum = 0;
         final ArrayList<String> outputArr = new ArrayList<String>();
         int outputArrCount = 0;
+        String message;
 
 //        TEST PATH = "src/Test/9_test-for-correct-scoping.txt"
+        File file = new File(filePath);
+        try (Scanner scan = new Scanner(file)){
+            int counter = 0;
+            String store = "";
+            int lineNumber = 1;
+
+            while (scan.hasNextLine()){
+                String str = scan.nextLine();
+                char[] myChar = str.toCharArray();
+                int linelength = myChar.length;
+
+                for (int c = 0 ; c < myChar.length ; c++){
+                    if (myChar[c] == ' ') {
+                        continue;
+                    }
+                    if (myChar[c] == '\t') {
+                        continue;
+                    }
+                    if (myChar[c] != ' ' && myChar[c] != '*' && myChar[c] != ':' && myChar[c] != '=' && myChar[c] != '0'
+                            && !numbers.contains(myChar[c]) && myChar[c] != '\"'
+                            && !(letter.contains(myChar[c]) || numbers.contains(myChar[c]) || _tokenSymbols.contains(myChar[c])
+                            || letteruppercase.contains(myChar[c]))) {
+                        System.out.println(
+                                "LEXICAL ERROR Undefined Symbol: " + myChar[c] + " line number: " + lineNumber + " in position " + (c));
+                        System.exit(1);
+
+                        message = "LEXICAL ERROR "+ c +"(ascii "+myChar+") Unidentified error. Scanning aborted";
+                        throw new FileNotFoundException(message);
+                    }
+                    else if(myChar[c] == '\"') {
+                        int count_string_leng = 0;
+                        c++;
+                        store += '\"';
+                        for(int i = 0; i < myChar.length ; c++){
+                            if(myChar[i] == '\"'){
+                                store += '\"';
+                                Boolean status = AsciiCharBetween32to127(store);
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
 
 
