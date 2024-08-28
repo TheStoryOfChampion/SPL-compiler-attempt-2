@@ -52,7 +52,7 @@ public class Lexer {
         Character[] letterUpperCaseChars = new Character[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
                 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' };
         Character[] nums = new Character[] { '0', '2', '1', '3', '4', '5', '6', '7', '8', '9' };
-        Character tokenSymbols[] = { ';', '{', '}', '(', ')', ',', '-', '^', '<', '>', '!', '.', ':', '=' };
+        Character tokenSymbols[] = { ';', '{', '}', '(', ')', ',', '-', '*', '<', '.', '=' };
         Character[] validLetters = new Character[] { 'p', 'h', 'c', 'w', 'i', 'e', 'n', 'b', 's', 'a', 'm', 'd', 'T', 'F',
                 'v', 'E', 'g', 'o', 'r', 't' };
 
@@ -92,7 +92,7 @@ public class Lexer {
                             || letteruppercase.contains(myChar[c]))) {
                         System.out.println(
                                 "LEXICAL ERROR Undefined Symbol: " + myChar[c] + " line number: " + lineNumber + " in position " + (c));
-                        System.exit(1);
+//                        System.exit(1);
 
                         message = "LEXICAL ERROR "+ c +"(ascii "+myChar+") Unidentified error. Scanning aborted";
                         throw new FileNotFoundException(message);
@@ -101,10 +101,28 @@ public class Lexer {
                         int count_string_leng = 0;
                         c++;
                         store += '\"';
-                        for(int i = 0; i < myChar.length ; c++){
+                        for(int i = c; i < myChar.length ; c++){
                             if(myChar[i] == '\"'){
                                 store += '\"';
                                 Boolean status = AsciiCharBetween32to127(store);
+                                if(status == true ){
+                                    if(count_string_leng > 8){
+                                        c = i;
+                                        break;
+                                    }
+                                    else if(count_string_leng == 8){
+                                        outputArr.add(store);
+                                        idNum++;
+                                        token obj = new token(idNum, "string", store, lineNumber);
+                                        Tok.add(obj);
+                                        outputArrCount++;
+                                        c = i;
+                                        break;
+                                    }
+                                }
+                                else {
+
+                                }
                             }
                         }
                     }
