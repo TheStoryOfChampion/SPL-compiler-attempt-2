@@ -113,17 +113,32 @@ public class Lexer {
                                     else if(count_string_leng == 8){
                                         outputArr.add(store);
                                         idNum++;
-                                        token obj = new token(idNum, "string", store, lineNumber);
+                                        token obj = new token(idNum, "CONST", store, lineNumber);
                                         Tok.add(obj);
                                         outputArrCount++;
                                         c = i;
                                         break;
+                                    } else{
+                                        System.out.println("LEXICAL ERROR: CONST LENGTH INVALID " + " line number: " + lineNumber);
+                                        message = "LEXICAL ERROR: CONST LENGTH INVALID Unidentified error. Scanning aborted";
+                                        throw new FileNotFoundException(message);
                                     }
                                 }
                                 else {
-
+                                    System.out.println("LEXICAL ERROR: CONST LENGTH INVALID " + " line number: " + lineNumber);
+                                    message = "LEXICAL ERROR: CONST LENGTH INVALID Unidentified error. Scanning aborted";
+                                    c = i;
+                                    throw new FileNotFoundException(message);
                                 }
+                            } else {
+                                store += myChar[i];
+                                count_string_leng++;
                             }
+                        }
+                        if (store.charAt(store.length()-1) != '\"'){
+                            System.out.println("LEXICAL ERROR: CONST HAS NO CLOSING QUOTATION MARK " + " line number: " + lineNumber);
+                            message = "LEXICAL ERROR: CONST LENGTH INVALID Unidentified error. Scanning aborted";
+                            throw new FileNotFoundException(message);
                         }
                     }
                 }
