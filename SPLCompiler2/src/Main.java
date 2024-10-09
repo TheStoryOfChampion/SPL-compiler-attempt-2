@@ -18,7 +18,7 @@ public class Main {
         try {
 //////////////////////////////////////START\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 //..................................LEXER....................................................
-            Lexer lex = new Lexer("src/Test/9_test-for-correct-scoping.txt");
+            Lexer lex = new Lexer("src/Test/Test1.txt");
             System.out.println("Lexing.......................");
             ArrayList<Lexer.token> tokenArray = new ArrayList<Lexer.token>();
             tokenArray = lex.start();

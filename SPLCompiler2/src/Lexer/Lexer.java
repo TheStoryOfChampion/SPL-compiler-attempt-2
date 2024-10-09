@@ -6,7 +6,7 @@ import java.util.*;
 import java.io.*;
 import java.nio.*;
 import java.io.File;
-import java.io.FileNotFoundException;
+//import java.io.Exception;
 import java.util.Scanner;
 
 public class Lexer {
@@ -46,7 +46,7 @@ public class Lexer {
         }
         return true;
     }
-    public ArrayList<token> start() throws FileNotFoundException{
+    public ArrayList<token> start() throws Exception{
         Character[] letterChars = new Character[] { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
                 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
         Character[] letterUpperCaseChars = new Character[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
@@ -95,7 +95,7 @@ public class Lexer {
 //                        System.exit(1);
 
                         message = "LEXICAL ERROR "+ c +"(ascii "+myChar+") Unidentified error. Scanning aborted";
-                        throw new FileNotFoundException(message);
+                        throw new Exception(message);
                     }
                     else if(myChar[c] == '\"') {
                         int count_string_leng = 0;
@@ -121,14 +121,14 @@ public class Lexer {
                                     } else{
                                         System.out.println("LEXICAL ERROR: CONST LENGTH INVALID " + " line number: " + lineNumber);
                                         message = "LEXICAL ERROR: CONST LENGTH INVALID Unidentified error. Scanning aborted";
-                                        throw new FileNotFoundException(message);
+                                        throw new Exception(message);
                                     }
                                 }
                                 else {
                                     System.out.println("LEXICAL ERROR: CONST LENGTH INVALID " + " line number: " + lineNumber);
                                     message = "LEXICAL ERROR: CONST LENGTH INVALID Unidentified error. Scanning aborted";
                                     c = i;
-                                    throw new FileNotFoundException(message);
+                                    throw new Exception(message);
                                 }
                             } else {
                                 store += myChar[i];
@@ -137,17 +137,35 @@ public class Lexer {
                         }
                         if (store.charAt(store.length()-1) != '\"'){
                             System.out.println("LEXICAL ERROR: CONST HAS NO CLOSING QUOTATION MARK " + " line number: " + lineNumber);
-                            message = "LEXICAL ERROR: CONST LENGTH INVALID Unidentified error. Scanning aborted";
-                            throw new FileNotFoundException(message);
+                            message = "LEXICAL ERROR: QUOTATION MARK MISSING. Scanning aborted";
+                            throw new Exception(message);
                         }
+                        else if(letter.contains(myChar[c]) || letteruppercase.contains(myChar[c])){
+                            if(!validLetter.contains(myChar[c])){
+                                System.out.println("LEXICAL ERROR: INVALID LETTER " + " line number: " + lineNumber);
+                                message = "LEXICAL ERROR: INVALID LETTER. Scanning aborted";
+                                throw new Exception(message);
+                            }
+
+                            store = "";
+                            store += myChar[c];
+                            idNum++;
+                            token obj = new token(idNum, "LETTER", store, lineNumber);
+                            Tok.add(obj);
+                        }
+                        else if (_tokenSymbols.contains(myChar[c])){
+                            store = "";
+                            store += myChar[c];
+                            idNum++;
+                            token obj = new token(idNum, "SYMBOL", store, lineNumber);
+                            Tok.add(obj);
+                        }
+                        store = "";
                     }
+                    lineNumber++;
                 }
             }
         }
-
-
-
-
         return Tok;
     }
 }
