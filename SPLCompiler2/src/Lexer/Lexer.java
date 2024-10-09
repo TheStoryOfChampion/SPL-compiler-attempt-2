@@ -8,6 +8,8 @@ import java.nio.*;
 import java.io.File;
 //import java.io.Exception;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Lexer {
     final ArrayList<token> Tok = new ArrayList<token>();
