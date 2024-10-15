@@ -38,19 +38,19 @@ public class Lexer {
         }
     }
 
-    public static boolean AsciiCharBetween32to127(String s) {
-        for (char c : s.toCharArray()) {
-
-            if (c >= 32 && c <= 127) {
-                continue;
-
-            } else {
-                return false;
-            }
-
-        }
-        return true;
-    }
+//    public static boolean AsciiCharBetween32to127(String s) {
+//        for (char c : s.toCharArray()) {
+//
+//            if (c >= 32 && c <= 127) {
+//                continue;
+//
+//            } else {
+//                return false;
+//            }
+//
+//        }
+//        return true;
+//    }
 
     private static final String ClassT ="\"[A-Z][a-z]{0,7}\"";   //Matches strings of 1 to 8 characters That start with a capitakl letter abd is within quotes
     private static final String ClassN = "0|" +                                      // Matches the literal 0
@@ -188,6 +188,8 @@ public class Lexer {
                         idNum++;
                         token obj = new token(idNum, "SYMBOL", store, lineNumber);
                         Tok.add(obj);
+                        store ="";
+                        continue;
                     } else if(myChar[c] == 'V'){
                         System.out.println("Öla V class");
                         c++;
@@ -211,7 +213,7 @@ public class Lexer {
                             outputArrCount++;
                             System.out.println("Ola, adding string.." + store);
                             store = "";
-                            break;
+                            continue;
                         } else {
                             System.out.println("The string does not match the regex.");
                             System.out.println("LEXICAL ERROR: INVALID VARIABLE " + " line number: " + lineNumber);
@@ -241,7 +243,7 @@ public class Lexer {
                             outputArrCount++;
                             System.out.println("Ola, adding Function " + store);
                             store = "";
-                            break;
+                            continue;
                         } else {
                             System.out.println("The string does not match the regex.");
                             System.out.println("LEXICAL ERROR: INVALID FUNCTION NAME " + " line number: " + lineNumber);
@@ -272,11 +274,39 @@ public class Lexer {
                             System.out.println("Ola, adding number " + store);
                             System.out.println("---------------");
                             store = "";
-                            break;
+                            continue;
                         } else {
                             System.out.println("The string does not match the regex.");
                             System.out.println("LEXICAL ERROR: INVALID NUMBER " + " line number: " + lineNumber);
                             message = "LEXICAL ERROR: NUMBER IS INVALID Unidentified error. Scanning aborted";
+                            throw new Exception(message);
+                        }
+                    } else {
+                        System.out.println("Inside the keywords search");
+                        for (int i = c; i < myChar.length ; i++){
+                            if (myChar[i] != ' ' && letter.contains(myChar[i])){
+                                store += myChar[i];
+                                c = i;
+                            } else {
+                                break;
+                            }
+                        }
+
+                        if (keyWords.contains(store)){
+                            outputArr.add(store);
+                            idNum++;
+                            token obj = new token(idNum, "KEYWORD", store, lineNumber);
+                            Tok.add(obj);
+                            outputArrCount++;
+                            System.out.println("Ola, adding keyword " + store);
+                            System.out.println("---------------");
+                            store = "";
+                            continue;
+                        }
+                        else {
+                            System.out.println("The string does not match the regex.");
+                            System.out.println("LEXICAL ERROR: SUSPECTED KEYWORD ERROR " + " line number: " + lineNumber);
+                            message = "LEXICAL ERROR: SUSPECTED KEYWORD IS NOT IN THE LIBRARY Unidentified error. Scanning aborted";
                             throw new Exception(message);
                         }
                     }

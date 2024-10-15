@@ -1,1 +1,1 @@
-LEXICAL ERROR 0(ascii [C@421faab1) Unidentified error. Scanning aborted
+LEXICAL ERROR: SUSPECTED KEYWORD IS NOT IN THE LIBRARY Unidentified error. Scanning aborted
