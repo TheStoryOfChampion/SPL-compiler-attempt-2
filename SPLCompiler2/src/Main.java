@@ -22,15 +22,28 @@ public class Main {
             System.out.println("Lexing.......................");
             ArrayList<Lexer.token> tokenArray = new ArrayList<Lexer.token>();
             tokenArray = lex.start();
+//            System.out.println(tokenArray);
             System.out.println("Done Lexing..................");
 
 //....................................PARSER..................................................
             Parser pars = new Parser();
             System.out.println("Parsing......................");
-//            TreeNode parsedTree = parser.start(true, false);
+            System.out.println("EMpty");
+//            TreeNode parsedTree = Parser.start(true, false);
 //            String treeString = parser.printTree();
 //            writeToFile(treeString, count++);
             System.out.println("Done Parsing.................");
+//.....................................DONE PARSING...........................................
+//....................................SEMANTIC ANALYZER.......................................
+
+
+
+//....................................DONE SEMANTIC ANALYZING.................................
+//.....................................CODE GENERATOR.........................................
+
+
+
+//.....................................DONE CODE GENERATING...................................
 
 ///////////////////////////////////////END\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
         } catch (Exception e) {

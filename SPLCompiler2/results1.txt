@@ -1,1 +1,1 @@
-LEXICAL ERROR: SUSPECTED KEYWORD IS NOT IN THE LIBRARY Unidentified error. Scanning aborted
+LEXICAL ERROR: VARIABLE NAME INVALID Unidentified error. Scanning aborted

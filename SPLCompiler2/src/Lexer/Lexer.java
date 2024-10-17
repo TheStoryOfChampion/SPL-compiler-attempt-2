@@ -176,7 +176,7 @@ public class Lexer {
                             store = "";
                             store += myChar[c];
                             idNum++;
-                            token obj = new token(idNum, "SYMBOL", store, lineNumber);
+                            token obj = new token(idNum, "KEYWORD", store, lineNumber);
                             Tok.add(obj);
                         }
                         store = "";
@@ -186,7 +186,7 @@ public class Lexer {
                         store = "";
                         store += myChar[c];
                         idNum++;
-                        token obj = new token(idNum, "SYMBOL", store, lineNumber);
+                        token obj = new token(idNum, "KEYWORD", store, lineNumber);
                         Tok.add(obj);
                         store ="";
                         continue;
@@ -200,6 +200,8 @@ public class Lexer {
                             if (myChar[i] == '_' || letter.contains(myChar[i]) || numbers.contains(myChar[i])){
                                 store += myChar[i];
                                 c=i;
+                            } else if (myChar[i] == ' ' || _tokenSymbols.contains(myChar[i])){
+                                break;
                             }
                         }
 //                        System.out.println("Match: " + store);
@@ -230,6 +232,8 @@ public class Lexer {
                             if (myChar[i] == '_' || letter.contains(myChar[i]) || numbers.contains(myChar[i])){
                                 store += myChar[i];
                                 c=i;
+                            } else if (myChar[i] == ' ' || _tokenSymbols.contains(myChar[i])){
+                                break;
                             }
                         }
 //                        System.out.println("Match: " + store);
@@ -260,6 +264,8 @@ public class Lexer {
                             if (myChar[i] == '-' || numbers.contains(myChar[i]) || myChar[i] == '.'){
                                 store += myChar[i];
                                 c=i;
+                            } else if (myChar[i] == ' ' || _tokenSymbols.contains(myChar[i])){
+                                break;
                             }
                         }
 //                        System.out.println("Match: " + store);
@@ -314,6 +320,7 @@ public class Lexer {
                 }
             }
         }
+        System.out.println(Tok);
         return Tok;
     }
 
