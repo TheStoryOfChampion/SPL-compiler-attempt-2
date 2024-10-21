@@ -38,6 +38,10 @@ public class Parser {
     static TreeNode root;
     private TreeNode currentNode;
 
+    public Parser(ArrayList<Lexer.token> tokens){
+//        input = tokens;
+    }
+
     /*
     PROG' -> PROG $
     PROG -> main GLOBVARS ALGO FUNCTIONS
@@ -101,9 +105,13 @@ public class Parser {
     public TreeNode start(ArrayList<Lexer.token> tokens){
         input = tokens;
 
+        root = new TreeNode("PROG");
+        root.type = "NonTerminal";
+        root.setId(id++);
+
         try {
-            TreeNode PROG = null;
-            PROG(PROG);
+//            TreeNode PROG = createNode();
+            PROG(root);
 
             if (pos != input.size()){
                 report("EOF");
@@ -122,9 +130,9 @@ public class Parser {
             report("main");
         }
 
-        TreeNode PROG = createNode(parent, "PROG");
+        TreeNode PROG = createNode(root, "PROG");
 
-        if (parent == null){
+        if (root == null){
             root = new TreeNode("PROG");
             root.type = "NonTerminal";
             root.setId(id++);
@@ -146,7 +154,7 @@ public class Parser {
         if(pos >= input.size()){
             return;
         }
-
+        System.out.println("GLOBVARS");
         if(pos < input.size() && (input.get(pos).contents).equals("begin")){
             return;
         }
@@ -170,10 +178,11 @@ public class Parser {
         if(pos >= input.size()){
             report("begin");
         }
-
+        System.out.println("ALGO");
         TreeNode ALGO = createNode(parent, "ALGO");
 
         if(pos < input.size() && (input.get(pos).contents).equals("begin")){
+            System.out.println("begin");
             ALGO = addTerminalChild(ALGO, input.get(pos).contents);
             next();
 
@@ -206,6 +215,8 @@ public class Parser {
         }
 
         TreeNode VNAME = createNode(parent, "VNAME");
+
+        System.out.println("VNAME");
 
         if (pos < input.size() && (input.get(pos).classification).equals("VNAME")){
             VNAME = addTerminalChild(VNAME, input.get(pos).contents);
@@ -240,7 +251,7 @@ public class Parser {
         }
 
         TreeNode INSTRUC = createNode(parent, "INSTRUC");
-
+        System.out.println("INSTRUC");
         COMMAND(INSTRUC);
 
         if (pos < input.size() && (input.get(pos).contents).equals(";")){
@@ -267,6 +278,8 @@ public class Parser {
         }
 
         TreeNode COMMAND = createNode(parent, "COMMAND");
+
+        System.out.println("COMMAND");
 
         if (pos < input.size() && (input.get(pos).contents).equals("skip")){
             COMMAND = addTerminalChild(COMMAND, input.get(pos).contents);
@@ -340,7 +353,7 @@ public class Parser {
         }
 
         TreeNode BODY = createNode(parent, "BODY");
-
+        System.out.println("BODY");
         PROLOG(BODY);
         LOCVARS(BODY);
         ALGO(BODY);
@@ -361,11 +374,13 @@ public class Parser {
         }
 
         TreeNode ATOMIC = createNode(parent, "ATOMIC");
-
+        System.out.println("ATOMIC " + input.get(pos).classification);
         if (pos < input.size() && (input.get(pos).classification).equals("VNAME")){
             VNAME(ATOMIC);
-        } else if (pos < input.size() && ((input.get(pos).contents).equals("NCONST") || (input.get(pos).classification).equals("TCONST"))){
+        } else if (pos < input.size() && ((input.get(pos).classification).equals("NCONST") || (input.get(pos).classification).equals("TCONST"))){
+            System.out.println("BEFOR CNST " + input.get(pos).classification + " " + input.get(pos).contents);
             CONST(ATOMIC);
+            System.out.println("AFTER CNST " + input.get(pos).classification + " " + input.get(pos).contents);
         } else {
             report("Variable name, number or text");
         }
@@ -377,7 +392,7 @@ public class Parser {
         }
 
         TreeNode ASSIGN = createNode(parent, "ASSIGN");
-
+        System.out.println("ASSIGN " + input.get(pos+1).contents);
         if (pos < input.size() && (input.get(pos+1).contents).equals("<")){
             VNAME(ASSIGN);
             ASSIGN= addTerminalChild(ASSIGN, input.get(pos).contents);
@@ -392,6 +407,7 @@ public class Parser {
         } else if (pos < input.size() && (input.get(pos+1).contents).equals("=")){
             VNAME(ASSIGN);
             ASSIGN = addTerminalChild(ASSIGN, input.get(pos).contents);
+            next();
             TERM(ASSIGN);
         } else {
             report("Variable Name followed by = or <");
@@ -448,7 +464,7 @@ public class Parser {
         }
 
         TreeNode BRANCH = createNode(parent, "BRANCH");
-
+        System.out.println("BRANCH");
         if (pos < input.size() && (input.get(pos).contents).equals("if")){
             BRANCH = addTerminalChild(BRANCH, input.get(pos).contents);
             next();
@@ -484,6 +500,7 @@ public class Parser {
         }
 
         TreeNode FNAME = createNode(parent, "FNAME");
+        System.out.println("FNAME");
 
         if (pos < input.size() && (input.get(pos).classification).equals("FNAME")){
             FNAME = addTerminalChild(FNAME, input.get(pos).contents);
@@ -592,10 +609,12 @@ public class Parser {
         }
 
         TreeNode CONST = createNode(parent, "CONST");
+        System.out.println("CONST " + input.get(pos).classification);
 
         if (pos < input.size() && (input.get(pos).classification).equals("NCONST")){
             CONST = addTerminalChild(CONST, input.get(pos).contents);
             next();
+            System.out.println("AFTER CONST " + input.get(pos).contents);
         } else if (pos < input.size() && (input.get(pos).classification).equals("TCONST")){
             CONST = addTerminalChild(CONST, input.get(pos).contents);
             next();
@@ -610,6 +629,8 @@ public class Parser {
         }
 
         TreeNode TERM = createNode(parent, "TERM");
+
+        System.out.println("term");
 
         if (pos < input.size() && ((input.get(pos).classification).equals("VNAME") || (input.get(pos).classification).equals("TCONST") || (input.get(pos).classification).equals("NCONST"))){
             ATOMIC(TERM);
@@ -629,6 +650,8 @@ public class Parser {
         }
 
         TreeNode COND = createNode(parent, "COND");
+
+        System.out.println("COND " + input.get(pos+2).contents);
 
         if (pos < input.size() && ((input.get(pos+2).classification).equals("VNAME") || (input.get(pos+2).classification.equals("NCONST")) || (input.get(pos+2).classification).equals("TCONST"))){
             SIMPLE( COND);
@@ -709,13 +732,13 @@ public class Parser {
         TreeNode SIMPLE = createNode(parent, "SIMPLE");
 
         BINOP(SIMPLE);
-
+        System.out.println("SIMPLE0 "+ input.get(pos).contents);
         if (pos < input.size() && (input.get(pos).contents).equals("(")){
             SIMPLE = addTerminalChild(SIMPLE, input.get(pos).contents);
             next();
 
             ATOMIC(SIMPLE);
-
+            System.out.println("EXPECTING COMMA " + input.get(pos).contents);
             if (pos < input.size() && (input.get(pos).contents).equals(",")){
                 SIMPLE = addTerminalChild(SIMPLE, input.get(pos).contents);
                 next();
@@ -743,6 +766,8 @@ public class Parser {
 
         TreeNode COMPOSIT = createNode(parent, "COMPOSIT");
 
+        System.out.println("COMPOSIT: " + input.get(pos).contents);
+
         if (pos < input.size() && ((input.get(pos).contents).equals("not") || (input.get(pos).contents).equals("sqrt"))){
             UNOP(COMPOSIT);
 
@@ -765,12 +790,14 @@ public class Parser {
                 (input.get(pos).contents.equals("grt")) || (input.get(pos).contents.equals("add")) || (input.get(pos).contents.equals("sub")) ||
                 (input.get(pos).contents.equals("mul")) || (input.get(pos).contents.equals("div"))))){
             BINOP(COMPOSIT);
+            System.out.println("Inside");
 
             if (pos < input.size() && (input.get(pos).contents).equals("(")){
                 COMPOSIT =addTerminalChild(COMPOSIT,input.get(pos).contents);
                 next();
-
+                System.out.println("Test");
                 SIMPLE(COMPOSIT);
+                System.out.println("SIMPLE"+input.get(pos).contents);
 
                 if (pos < input.size() && (input.get(pos).contents).equals(",")){
                     COMPOSIT = addTerminalChild(COMPOSIT, input.get(pos).contents);
@@ -871,12 +898,13 @@ public class Parser {
 
 //////////////////////////////////////HELPERS\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
-//................................report to be ammended............................................
-
     private static void report(String Report){
         if (pos >= input.size()){
+            System.out.println("Syntax error expected : " + Report + " but got end of a file");
             System.exit(1);
         }
+        System.out.println("Syntax error at line: " + input.get(pos).line + " expected: " + Report
+                + " but got token: " + input.get(pos).contents);
         System.exit(1);
     }
 
@@ -899,6 +927,36 @@ public class Parser {
         parent.addChild(term);
         return parent;
     }
+    static String returnString =  "";
+    public static String print(TreeNode parent){
+        if (parent == null){
+            returnString += "";
+        }
+//        String returnString =  "";
+
+        if (parent.type.equals("NonTerminal")){
+            System.out.println("Name: " + parent.name + ". ID: " + parent.id + " ||children:");
+            returnString += "Name: " + parent.name + ". ID: " + parent.id + " ||children:";
+
+            for (int c = 0; c < parent.children.size() ; c++){
+                System.out.println(parent.children.get(c).id + " ");
+                returnString += parent.children.get(c).id + " ";
+            }
+
+            System.out.println();
+            returnString += "\n";
+
+            for (int c = 0 ; c < parent.children.size() ; c++){
+                print(parent.children.get(c));
+                returnString += parent.children.get(c);
+            }
+        } else if (parent.type.equals("Terminal")){
+            System.out.println(" Terminal: " + parent.name);
+            returnString += " Terminal: " + parent.name;
+            print(null);
+        }
+        return returnString;
+    }
+//////////////////////////////////////////////////END\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 }
 
-//..............................Add print under here...........................................

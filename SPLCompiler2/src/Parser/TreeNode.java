@@ -2,12 +2,12 @@ package Parser;
 import java.util.ArrayList;
 
 public class TreeNode {
-    int id;
-    String name;
-    String type;//..............................TERMINAL OR NONTERMINAL...........................................
-    ArrayList<TreeNode> children = new ArrayList<>();
-    int newScope=0;
-    int ScopeId=0;
+    public int id;
+    public String name;
+    public String type;//..............................TERMINAL OR NONTERMINAL...........................................
+    public ArrayList<TreeNode> children = new ArrayList<>();
+    public int newScope=0;
+    public int ScopeId=0;
 
     void setScopeID(int scopeID){
         this.ScopeId=scopeID;

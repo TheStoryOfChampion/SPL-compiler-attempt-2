@@ -1,5 +1,6 @@
 import Lexer.Lexer;
 import Parser.Parser;
+import Parser.TreeNode;
 import org.w3c.dom.Node;
 
 import java.io.File;
@@ -27,10 +28,10 @@ public class Main {
             System.out.println("Done Lexing..................");
 
 //....................................PARSER..................................................
-            Parser pars = new Parser();
+            Parser pars = new Parser(tokenArray);
             System.out.println("Parsing......................");
             TreeNode parsedTree = pars.start(tokenArray);
-//            String treeString = parser.printTree();
+            String treeString = pars.print(parsedTree);
 //            writeToFile(treeString, count++);
             System.out.println("Done Parsing.................");
 //.....................................DONE PARSING...........................................
