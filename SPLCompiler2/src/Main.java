@@ -1,5 +1,6 @@
 import Lexer.Lexer;
 import Parser.Parser;
+import org.w3c.dom.Node;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -10,7 +11,7 @@ import java.util.Scanner;
 import java.util.regex.*;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
         String directory = "";
@@ -20,16 +21,15 @@ public class Main {
 //..................................LEXER....................................................
             Lexer lex = new Lexer("src/Test/Test1.txt");
             System.out.println("Lexing.......................");
-            ArrayList<Lexer.token> tokenArray = new ArrayList<Lexer.token>();
-            tokenArray = lex.start();
-//            System.out.println(tokenArray);
+//             tokenArray = new ArrayList<Lexer.token>();
+            ArrayList<Lexer.token> tokenArray = lex.start();
+//            System.out.println(tokenArray.get(0).contents);
             System.out.println("Done Lexing..................");
 
 //....................................PARSER..................................................
             Parser pars = new Parser();
             System.out.println("Parsing......................");
-            System.out.println("EMpty");
-//            TreeNode parsedTree = Parser.start(true, false);
+            TreeNode parsedTree = pars.start(tokenArray);
 //            String treeString = parser.printTree();
 //            writeToFile(treeString, count++);
             System.out.println("Done Parsing.................");

@@ -25,10 +25,10 @@ public class Lexer {
         filePath = pFilePath;
     }
     public class token{
-        int id;
-        String classification;
-        String contents;
-        int line;
+        public int id;
+        public String classification;
+        public String contents;
+        public int line;
 
         public token(int id, String classification, String contents, int line){
             this.id = id;
@@ -135,7 +135,7 @@ public class Lexer {
                                     System.out.println("The string matches the regex.");
                                     outputArr.add(store);
                                     idNum++;
-                                    token obj = new token(idNum, "CONST", store, lineNumber);
+                                    token obj = new token(idNum, "TCONST", store, lineNumber);
                                     Tok.add(obj);
                                     outputArrCount++;
                                     c = i;
@@ -210,7 +210,7 @@ public class Lexer {
                             System.out.println("The string matches the regex.");
                             outputArr.add(store);
                             idNum++;
-                            token obj = new token(idNum, "CONST", store, lineNumber);
+                            token obj = new token(idNum, "VNAME", store, lineNumber);
                             Tok.add(obj);
                             outputArrCount++;
                             System.out.println("Ola, adding string.." + store);
@@ -242,7 +242,7 @@ public class Lexer {
                             System.out.println("The string matches the regex.");
                             outputArr.add(store);
                             idNum++;
-                            token obj = new token(idNum, "CONST", store, lineNumber);
+                            token obj = new token(idNum, "FNAME", store, lineNumber);
                             Tok.add(obj);
                             outputArrCount++;
                             System.out.println("Ola, adding Function " + store);
@@ -274,7 +274,7 @@ public class Lexer {
                             System.out.println("The string matches the regex.");
                             outputArr.add(store);
                             idNum++;
-                            token obj = new token(idNum, "CONST", store, lineNumber);
+                            token obj = new token(idNum, "NCONST", store, lineNumber);
                             Tok.add(obj);
                             outputArrCount++;
                             System.out.println("Ola, adding number " + store);
@@ -320,7 +320,7 @@ public class Lexer {
                 }
             }
         }
-        System.out.println(Tok);
+//        System.out.println(Tok);
         return Tok;
     }
 
