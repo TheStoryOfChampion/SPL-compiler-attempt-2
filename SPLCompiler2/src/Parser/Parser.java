@@ -187,7 +187,7 @@ public class Parser {
             next();
 
             INSTRUC(ALGO);
-
+            System.out.println("ALGO " + input.get(pos).contents);
             if(pos < input.size() && (input.get(pos).contents).equals("end")){
                 ALGO = addTerminalChild(ALGO, input.get(pos).contents);
                 next();
@@ -256,8 +256,7 @@ public class Parser {
         if (pos < input.size() && (input.get(pos).contents).equals("end")){
             System.out.println("here");
             INSTRUC = addTerminalChild(INSTRUC, input.get(pos).contents);
-            next();
-            System.out.println("finished");
+            System.out.println("finished" + input.get(pos).contents);
             return;
         }
 
