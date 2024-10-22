@@ -264,7 +264,7 @@ public class Lexer {
                             if (myChar[i] == '-' || numbers.contains(myChar[i]) || myChar[i] == '.'){
                                 store += myChar[i];
                                 c=i;
-                            } else if (myChar[i] == ' ' || _tokenSymbols.contains(myChar[i])){
+                            } else if (myChar[i] == ' '|| _tokenSymbols.contains(myChar[i])){
                                 break;
                             }
                         }

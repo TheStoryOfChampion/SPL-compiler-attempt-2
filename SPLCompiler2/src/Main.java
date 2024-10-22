@@ -21,7 +21,9 @@ public class Main {
 //////////////////////////////////////START\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 //..................................LEXER....................................................
             Lexer lex = new Lexer("src/Test/Test1.txt");
+//            Lexer lex = new Lexer("src/location.txt");
             System.out.println("Lexing.......................");
+
 //             tokenArray = new ArrayList<Lexer.token>();
             ArrayList<Lexer.token> tokenArray = lex.start();
 //            System.out.println(tokenArray.get(0).contents);

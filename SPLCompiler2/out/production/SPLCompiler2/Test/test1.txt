@@ -30,7 +30,7 @@ V_d = F_name(0.5,V_a,"Update");
 
 F_name2 (500,"G",-450.7);
 
-if or(eq(0,1),grt(0,1)) then
+if or(eq(0 , 1 ),grt(0 , 1 )) then
 begin
 V_a = sqrt(add(add(V_a,V_d),sqrt(sqrt(V_a))));
 V_b = mul(div(V_a,V_d),sub(add(V_a,V_d),V_d));
@@ -41,7 +41,7 @@ V_a = mul(V_a,V_d);
 V_b = div(V_a,V_d);
 end;
 
-if and(0,1) then
+if and(0 , 1 ) then
 begin
 V_a = sqrt(add(add(V_a,V_d),sqrt(sqrt(V_a))));
 V_b = mul(div(V_a,V_d),sub(add(V_a,V_d),V_d));
@@ -53,7 +53,7 @@ V_b = div(V_a,V_d);
 end;
 
 
-if not(and(0,1)) then
+if not(and(0 , 1 )) then
 begin
 V_a = sqrt(add(add(V_a,V_d),sqrt(sqrt(V_a))));
 V_b = mul(div(V_a,V_d),sub(add(V_a,V_d),V_d));

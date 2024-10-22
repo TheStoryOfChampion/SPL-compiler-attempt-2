@@ -205,8 +205,12 @@ public class Parser {
         }
 
         TreeNode FUNCTIONS = createNode(parent, "FUNCTIONS");
-        DECL(FUNCTIONS);
-        FUNCTIONS(FUNCTIONS);
+        if (pos < input.size() && ((input.get(pos).contents).equals("num") || (input.get(pos).contents).equals("void"))){
+            DECL(FUNCTIONS);
+            FUNCTIONS(FUNCTIONS);
+        } else {
+            return;
+        }
     }
 
     private static void VNAME(TreeNode parent){
@@ -246,11 +250,18 @@ public class Parser {
             return;
         }
 
+        TreeNode INSTRUC = createNode(parent, "INSTRUC");
+
+        System.out.println("INSTRUC "+ input.get(pos).contents);
         if (pos < input.size() && (input.get(pos).contents).equals("end")){
+            System.out.println("here");
+            INSTRUC = addTerminalChild(INSTRUC, input.get(pos).contents);
+            next();
+            System.out.println("finished");
             return;
         }
 
-        TreeNode INSTRUC = createNode(parent, "INSTRUC");
+
         System.out.println("INSTRUC");
         COMMAND(INSTRUC);
 
