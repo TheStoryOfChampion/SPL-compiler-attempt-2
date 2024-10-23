@@ -141,6 +141,7 @@ public class Parser {
         if(pos < input.size() && (((input.get(pos).contents).equals("main")))){
             PROG = addTerminalChild(PROG, input.get(pos).contents);
             next();
+            parent.setId(id++);
 
             GLOBVARS(PROG);
             ALGO(PROG);
@@ -205,6 +206,7 @@ public class Parser {
         }
 
         TreeNode FUNCTIONS = createNode(parent, "FUNCTIONS");
+        parent.setId(id++);
         if (pos < input.size() && ((input.get(pos).contents).equals("num") || (input.get(pos).contents).equals("void"))){
             DECL(FUNCTIONS);
             FUNCTIONS(FUNCTIONS);
@@ -938,11 +940,11 @@ public class Parser {
         return parent;
     }
     static String returnString =  "";
-    public static String print(TreeNode parent){
-        if (parent == null){
+    public static String print(TreeNode parent, String indent){
+        /*if (parent == null){
             returnString += "";
         }
-//        String returnString =  "";
+        String returnString =  "";
 
         if (parent.type.equals("NonTerminal")){
             System.out.println("Name: " + parent.name + ". ID: " + parent.id + " ||children:");
@@ -964,6 +966,15 @@ public class Parser {
             System.out.println(" Terminal: " + parent.name);
             returnString += " Terminal: " + parent.name;
             print(null);
+        }
+        return returnString;*/
+        String returnString =  "";
+//        System.out.println(" " + "+-- " + parent.name + " (" + parent.type + ") [ScopeID: " + parent.ScopeId + "]");
+        returnString += indent + "+-- " + parent.name +" [ScopeID: " + parent.ScopeId + "]" + "\n";
+
+        // Iterate through and print all children recursively
+        for (TreeNode child : parent.children) {
+            returnString += print(child, indent+"  ");
         }
         return returnString;
     }

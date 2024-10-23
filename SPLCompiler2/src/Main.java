@@ -33,8 +33,8 @@ public class Main {
             Parser pars = new Parser(tokenArray);
             System.out.println("Parsing......................");
             TreeNode parsedTree = pars.start(tokenArray);
-//            String treeString = pars.print(parsedTree);
-//            writeToFile(treeString, count++);
+            String treeString = pars.print(parsedTree, "");
+            writeToFile(treeString, count++);
             System.out.println("Done Parsing.................");
 //.....................................DONE PARSING...........................................
 //....................................SEMANTIC ANALYZER.......................................
