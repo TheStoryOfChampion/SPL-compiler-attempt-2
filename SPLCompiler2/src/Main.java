@@ -1,6 +1,8 @@
 import Lexer.Lexer;
 import Parser.Parser;
 import Parser.TreeNode;
+import Semantics.SemanticAnalyzer;
+import Semantics.SymbolTable;
 import org.w3c.dom.Node;
 
 import java.io.File;
@@ -10,18 +12,21 @@ import java.nio.charset.CoderMalfunctionError;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.*;
+import javax.swing.JOptionPane;
 
 public class Main {
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
-        String directory = "";
+        String location = "";
         int count = 1;
         try {
 //////////////////////////////////////START\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 //..................................LEXER....................................................
-            Lexer lex = new Lexer("src/Test/Test1.txt");
+            String name = JOptionPane.showInputDialog("Please enter the file name with the extension at the end: ");
+            Lexer lex = new Lexer(name);
 //            Lexer lex = new Lexer("src/location.txt");
+//            Lexer lex = new Lexer("src/Test/test1.txt");
             System.out.println("Lexing.......................");
 
 //             tokenArray = new ArrayList<Lexer.token>();
@@ -39,6 +44,8 @@ public class Main {
 //.....................................DONE PARSING...........................................
 //....................................SEMANTIC ANALYZER.......................................
             System.out.println("Semantic Checking............");
+            SemanticAnalyzer sem = new SemanticAnalyzer();
+            sem.start(parsedTree);
 
             System.out.println("Done Semantic Checking.......");
 //....................................DONE SEMANTIC ANALYZING.................................

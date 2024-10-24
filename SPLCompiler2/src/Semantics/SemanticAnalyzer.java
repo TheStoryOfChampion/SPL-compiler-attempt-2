@@ -14,8 +14,11 @@ public class SemanticAnalyzer {
     static ArrayList<SymbolTable> symbolTab = new ArrayList<SymbolTable>();
 
     public void start(TreeNode root) throws Exception{
+        System.out.println("GLOBAL");
         checkVClass(root, ScopeName, ScopeID);
+        System.out.println("GLOBAL AFTER VARS");
         ArrayList<SymbolTable> sym = checkFunctions(root, "main", 1);
+        System.out.println(sym.get(0).NodeName + " " + sym.get(0).NodeId + " " + sym.get(0).ScopeName + " "+ sym.get(0).ScopeId);
 
         for (int c  = 0; c < sym.size(); c++){
             symbolTable.add(sym.get(c));
@@ -34,24 +37,30 @@ public class SemanticAnalyzer {
 
         if (parent.type.equals("NonTerminal")){
             for (int c = 0 ; c < parent.children.size() ; c++){
+//                System.out.println(parent.children.get(c).name);
                 if (parent.children.get(c).name.equals("GLOBVARS")){
-                    TreeNode child = parent.children.get(c).children.get(1);
-                    String digits = concatDigs(child);
+//                    System.out.println(parent.children.size()+"=================================="+parent.children.get(c).name);
+                    TreeNode child = parent.children.get(2);
+//                    System.out.println("GLOBVARS");
 
-                    if (searchTable(parent.children.get(c).children.get(0).name + digits)){
-                        symbolTable.add(new SymbolTable(parent.children.get(c).id, parent.children.get(c).children.get(0).name+digits, 0, "global"));
+                    if (searchTable(parent.children.get(0).name)){
+//                        System.out.println("Adding symbol" + parent.children.get(c).children.get(1).children.get(0).name);
+                        symbolTable.add(new SymbolTable(parent.children.get(c).id, parent.children.get(c).children.get(1).children.get(0).name, 0, "global"));
                     }
+//                    System.out.println("GLOBVARS");
                     checkVClass(parent.children.get(c), scopeN, scopeID);
                 }
                 checkVClass(parent.children.get(c), scopeN, scopeID);
             }
         } else if (parent.type.equals("Terminal")){
+//            System.out.println("Here");
             checkVClass(null, scopeN, scopeID);
 
         }
     }
 
     public static ArrayList<SymbolTable> checkFunctions(TreeNode parent, String scopeN, int scopeID){
+//        System.out.println("FUNCTIONS");
         ArrayList<SymbolTable> functionSymbolTable = new ArrayList<SymbolTable>();
         Boolean inside = true;
 
@@ -207,6 +216,7 @@ public class SemanticAnalyzer {
     }
 
     public static Boolean searchTable(String search){
+//        System.out.println("SEARCH");
         for (int c = 0 ; c < symbolTable.size() ; c++){
             if (symbolTable.get(c).NodeName.equals(search)){
                 return false;

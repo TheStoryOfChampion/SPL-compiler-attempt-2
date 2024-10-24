@@ -1,0 +1,21 @@
+Greetings.
+
+NB NB NB Specifics about my practical:
+Please just make sure in the test code the number consts (Class N tokens) have a space on either side of it. e.g instead of havinf  '1', you'd have ' 1 '. In context, for example the code snipper or(0,1) would be or( 0 , 1 ).
+
+Running my programm:
+* I have provided a jar file. in the same directory as the jar file.
+
+* Please copy your test files and put them into the same root directory as the jar file.
+
+* Then open your terminal in said directory and run the command 'java -jar SPLCompiler2.jar' without the single quotes.
+
+* Input your file name (case sensitive) with the extension (.txt) into the popup that appears.
+
+* As it stands only the Lexer, Parser and Semantic analyser(scoping) works. so it should output 2 files. one with the parse tree and one with the Symbol Table. These same files will also contain errors should there be any. 
+should there be a lexical error, it will not output any files. instead it will output the error in the terminal.
+
+
+Should anything go wrong, please do not hesitate to contact me via my email (u18045881@tuks.co.za or mbofho47@gmail.com) or via my phone (065 974 9558).
+
+should you want to look at my code. It is available on GitHub at: https://github.com/TheStoryOfChampion/SPL-compiler-attempt-2

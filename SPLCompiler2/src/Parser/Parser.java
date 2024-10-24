@@ -162,13 +162,12 @@ public class Parser {
 
         TreeNode GLOBVARS = createNode(parent, "GLOBVARS");
 
-        VTYP(parent);
-        VNAME(parent);
+        VTYP(GLOBVARS);
+        VNAME(GLOBVARS);
         if (pos < input.size() && (input.get(pos).contents).equals(",")){
-            GLOBVARS = addTerminalChild(GLOBVARS, input.get(pos).contents);
+//            GLOBVARS = addTerminalChild(GLOBVARS, input.get(pos).contents);
             next();
-
-            GLOBVARS(GLOBVARS);
+            GLOBVARS(parent);
         } else {
             report(",");
         }
@@ -267,7 +266,7 @@ public class Parser {
         COMMAND(INSTRUC);
 
         if (pos < input.size() && (input.get(pos).contents).equals(";")){
-            INSTRUC = addTerminalChild(INSTRUC, input.get(pos).contents);
+//            INSTRUC = addTerminalChild(INSTRUC, input.get(pos).contents);
             next();
 
             INSTRUC(INSTRUC);
@@ -326,24 +325,24 @@ public class Parser {
         FNAME(HEADER);
 
         if (pos < input.size() && (input.get(pos).contents).equals("(")){
-            HEADER = addTerminalChild(HEADER, input.get(pos).contents);
+//            HEADER = addTerminalChild(HEADER, input.get(pos).contents);
             next();
 
             VNAME(HEADER);
             if (pos < input.size() && (input.get(pos).contents).equals(",")){
-                HEADER = addTerminalChild(HEADER, input.get(pos).contents);
+//                HEADER = addTerminalChild(HEADER, input.get(pos).contents);
                 next();
 
                 VNAME(HEADER);
 
                 if (pos < input.size() && (input.get(pos).contents).equals(",")){
-                    HEADER = addTerminalChild(HEADER, input.get(pos).contents);
+//                    HEADER = addTerminalChild(HEADER, input.get(pos).contents);
                     next();
 
                     VNAME(HEADER);
 
                     if (pos < input.size() && (input.get(pos).contents).equals(")")){
-                        HEADER = addTerminalChild(HEADER, input.get(pos).contents);
+//                        HEADER = addTerminalChild(HEADER, input.get(pos).contents);
                         next();
                     } else {
                         report(")");
@@ -436,25 +435,25 @@ public class Parser {
         FNAME(CALL);
 
         if (pos < input.size() && (input.get(pos).contents).equals("(")){
-            CALL = addTerminalChild(CALL, input.get(pos).contents);
+//            CALL = addTerminalChild(CALL, input.get(pos).contents);
             next();
 
             ATOMIC(CALL);
 
             if (pos < input.size() && (input.get(pos).contents).equals(",")){
-                CALL = addTerminalChild(CALL, input.get(pos).contents);
+//                CALL = addTerminalChild(CALL, input.get(pos).contents);
                 next();
 
                 ATOMIC(CALL);
 
                 if (pos < input.size() && (input.get(pos).contents).equals(",")){
-                    CALL = addTerminalChild(CALL, input.get(pos).contents);
+//                    CALL = addTerminalChild(CALL, input.get(pos).contents);
                     next();
 
                     ATOMIC(CALL);
 
                     if (pos < input.size() && (input.get(pos).contents).equals(")")){
-                        CALL = addTerminalChild(CALL, input.get(pos).contents);
+//                        CALL = addTerminalChild(CALL, input.get(pos).contents);
                         next();
                     } else {
                         report(")");
@@ -545,7 +544,7 @@ public class Parser {
         TreeNode PROLOG = createNode(parent, "PROLOG");
 
         if (pos < input.size() && (input.get(pos).contents).equals("{")){
-            PROLOG = addTerminalChild(PROLOG, input.get(pos).contents);
+//            PROLOG = addTerminalChild(PROLOG, input.get(pos).contents);
             next();
         } else {
             report("{");
@@ -563,21 +562,21 @@ public class Parser {
         VNAME(LOCVARS);
 
         if (pos < input.size() && (input.get(pos).contents).equals(",")){
-            LOCVARS = addTerminalChild(LOCVARS, input.get(pos).contents);
+//            LOCVARS = addTerminalChild(LOCVARS, input.get(pos).contents);
             next();
 
             VTYP(LOCVARS);
             VNAME(LOCVARS);
 
             if (pos < input.size() && (input.get(pos).contents).equals(",")){
-                LOCVARS = addTerminalChild(LOCVARS, input.get(pos).contents);
+//                LOCVARS = addTerminalChild(LOCVARS, input.get(pos).contents);
                 next();
 
                 VTYP(LOCVARS);
                 VNAME(LOCVARS);
 
                 if (pos < input.size() && (input.get(pos).contents).equals(",")){
-                    LOCVARS = addTerminalChild(LOCVARS, input.get(pos).contents);
+//                    LOCVARS = addTerminalChild(LOCVARS, input.get(pos).contents);
                     next();
                 } else {
                     report(",");
@@ -598,7 +597,7 @@ public class Parser {
         TreeNode EPILOG = createNode(parent, "EPILOG");
 
         if (pos < input.size() && (input.get(pos).contents).equals("}")){
-            EPILOG = addTerminalChild(EPILOG, input.get(pos).contents);
+//            EPILOG = addTerminalChild(EPILOG, input.get(pos).contents);
             next();
         } else {
             report("}");
@@ -688,13 +687,13 @@ public class Parser {
             UNOP(OP);
 
             if (pos < input.size() && (input.get(pos).contents).equals("(")) {
-                OP = addTerminalChild(OP, input.get(pos).contents);
+//                OP = addTerminalChild(OP, input.get(pos).contents);
                 next();
 
                 ARG(OP);
 
                 if (pos < input.size() && (input.get(pos).contents).equals(")")) {
-                    OP = addTerminalChild(OP, input.get(pos).contents);
+//                    OP = addTerminalChild(OP, input.get(pos).contents);
                     next();
                 } else {
                     report(")");
@@ -708,19 +707,19 @@ public class Parser {
             BINOP(OP);
 
             if (pos < input.size() && (input.get(pos).contents).equals("(")) {
-                OP = addTerminalChild(OP, input.get(pos).contents);
+//                OP = addTerminalChild(OP, input.get(pos).contents);
                 next();
 
                 ARG(OP);
 
                 if (pos < input.size() && (input.get(pos).contents).equals(",")) {
-                    OP = addTerminalChild(OP, input.get(pos).contents);
+//                    OP = addTerminalChild(OP, input.get(pos).contents);
                     next();
 
                     ARG(OP);
 
                     if (pos < input.size() && (input.get(pos).contents).equals(")")) {
-                        OP = addTerminalChild(OP, input.get(pos).contents);
+//                        OP = addTerminalChild(OP, input.get(pos).contents);
                         next();
                     } else {
                         report(")");
@@ -746,19 +745,19 @@ public class Parser {
         BINOP(SIMPLE);
         System.out.println("SIMPLE0 "+ input.get(pos).contents);
         if (pos < input.size() && (input.get(pos).contents).equals("(")){
-            SIMPLE = addTerminalChild(SIMPLE, input.get(pos).contents);
+//            SIMPLE = addTerminalChild(SIMPLE, input.get(pos).contents);
             next();
 
             ATOMIC(SIMPLE);
             System.out.println("EXPECTING COMMA " + input.get(pos).contents);
             if (pos < input.size() && (input.get(pos).contents).equals(",")){
-                SIMPLE = addTerminalChild(SIMPLE, input.get(pos).contents);
+//                SIMPLE = addTerminalChild(SIMPLE, input.get(pos).contents);
                 next();
 
                 ATOMIC(SIMPLE);
 
                 if (pos < input.size() && (input.get(pos).contents).equals(")")){
-                    SIMPLE = addTerminalChild(SIMPLE, input.get(pos).contents);
+//                    SIMPLE = addTerminalChild(SIMPLE, input.get(pos).contents);
                     next();
                 } else {
                     report(")");
@@ -784,13 +783,13 @@ public class Parser {
             UNOP(COMPOSIT);
 
             if (pos < input.size() && (input.get(pos).contents).equals("(")){
-                COMPOSIT = addTerminalChild(COMPOSIT, input.get(pos).contents);
+//                COMPOSIT = addTerminalChild(COMPOSIT, input.get(pos).contents);
                 next();
 
                 SIMPLE(COMPOSIT);
 
                 if (pos < input.size() && (input.get(pos).contents).equals(")")){
-                    COMPOSIT = addTerminalChild(COMPOSIT, input.get(pos).contents);
+//                    COMPOSIT = addTerminalChild(COMPOSIT, input.get(pos).contents);
                     next();
                 } else {
                     report(")");
@@ -805,20 +804,20 @@ public class Parser {
             System.out.println("Inside");
 
             if (pos < input.size() && (input.get(pos).contents).equals("(")){
-                COMPOSIT =addTerminalChild(COMPOSIT,input.get(pos).contents);
+//                COMPOSIT =addTerminalChild(COMPOSIT,input.get(pos).contents);
                 next();
                 System.out.println("Test");
                 SIMPLE(COMPOSIT);
                 System.out.println("SIMPLE"+input.get(pos).contents);
 
                 if (pos < input.size() && (input.get(pos).contents).equals(",")){
-                    COMPOSIT = addTerminalChild(COMPOSIT, input.get(pos).contents);
+//                    COMPOSIT = addTerminalChild(COMPOSIT, input.get(pos).contents);
                     next();
 
                     SIMPLE(COMPOSIT);
 
                     if (pos < input.size() && (input.get(pos).contents).equals(")")){
-                        COMPOSIT = addTerminalChild(COMPOSIT, input.get(pos).contents);
+//                        COMPOSIT = addTerminalChild(COMPOSIT, input.get(pos).contents);
                         next();
                     } else {
                         report(")");
