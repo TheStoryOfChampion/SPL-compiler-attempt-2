@@ -135,13 +135,13 @@ public class Parser {
         if (root == null){
             root = new TreeNode("PROG");
             root.type = "NonTerminal";
-            root.setId(id++);
+            root.setScopeID(++idCounter);
         }
 
         if(pos < input.size() && (((input.get(pos).contents).equals("main")))){
             PROG = addTerminalChild(PROG, input.get(pos).contents);
             next();
-            parent.setId(id++);
+            PROG.setScopeID(++idCounter);
 
             GLOBVARS(PROG);
             ALGO(PROG);
@@ -206,7 +206,7 @@ public class Parser {
         }
 
         TreeNode FUNCTIONS = createNode(parent, "FUNCTIONS");
-        parent.setId(id++);
+        FUNCTIONS.setScopeID(++idCounter);
         if (pos < input.size() && ((input.get(pos).contents).equals("num") || (input.get(pos).contents).equals("void"))){
             DECL(FUNCTIONS);
             FUNCTIONS(FUNCTIONS);
@@ -929,6 +929,7 @@ public class Parser {
     private static TreeNode createNode(TreeNode parent, String nm){
         TreeNode created = new TreeNode(nm, "NonTerminal");
         created.setId(id++);
+        created.setScopeID(idCounter);
         parent.addChild(created);
         return created;
     }
@@ -936,6 +937,7 @@ public class Parser {
     private static TreeNode addTerminalChild(TreeNode parent, String nam){
         TreeNode term = new TreeNode(nam, "Terminal");
         term.setId(id++);
+        term.setScopeID(idCounter);
         parent.addChild(term);
         return parent;
     }
@@ -970,7 +972,7 @@ public class Parser {
         return returnString;*/
         String returnString =  "";
 //        System.out.println(" " + "+-- " + parent.name + " (" + parent.type + ") [ScopeID: " + parent.ScopeId + "]");
-        returnString += indent + "+-- " + parent.name +" [ScopeID: " + parent.ScopeId + "]" + "\n";
+        returnString += indent + "+-- " + parent.name +" [ScopeID: " + parent.getScopeID() + "]" + "\n";
 
         // Iterate through and print all children recursively
         for (TreeNode child : parent.children) {
