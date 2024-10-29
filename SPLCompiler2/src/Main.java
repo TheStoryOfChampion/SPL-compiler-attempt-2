@@ -24,7 +24,7 @@ public class Main {
 //////////////////////////////////////START\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 //..................................LEXER....................................................
             String name = JOptionPane.showInputDialog("Please enter the file name with the extension at the end: ");
-            Lexer lex = new Lexer(name);
+            Lexer lex = new Lexer("src/Test/"+name);
 //            Lexer lex = new Lexer("src/location.txt");
 //            Lexer lex = new Lexer("src/Test/test1.txt");
             System.out.println("Lexing.......................");
